@@ -1,0 +1,96 @@
+---Top 5 Products by Sales in Each Region---
+
+SELECT *
+FROM (
+    SELECT
+        REGION,
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        SUM(SALES) AS TOTAL_SALES,
+        RANK() OVER (
+            PARTITION BY REGION
+            ORDER BY SUM(SALES) DESC
+        ) AS RN
+    FROM STG_RETAIL_SALES
+    GROUP BY REGION, PRODUCT_ID, PRODUCT_NAME
+
+----Top 3 Customers by Profit in Each Region-----
+  SELECT *
+FROM (
+    SELECT
+        REGION,
+        CUSTOMER_ID,
+        CUSTOMER_NAME,
+        SUM(PROFIT) AS TOTAL_PROFIT,
+        ROW_NUMBER() OVER (
+            PARTITION BY REGION
+            ORDER BY SUM(PROFIT) DESC
+        ) AS RN
+    FROM STG_RETAIL_SALES
+    GROUP BY REGION, CUSTOMER_ID, CUSTOMER_NAME
+) X
+WHERE RN <= 3;
+) X
+WHERE RN <= 5;
+
+----Most Profitable Category by Region----
+
+SELECT *
+FROM (
+    SELECT
+        REGION,
+        CATEGORY,
+        SUM(PROFIT) AS TOTAL_PROFIT,
+        RANK() OVER (
+            PARTITION BY REGION
+            ORDER BY SUM(PROFIT) DESC
+        ) AS RN
+    FROM STG_RETAIL_SALES
+    GROUP BY REGION, CATEGORY
+) X
+WHERE RN = 1;
+
+----Monthly Sales Trend----
+
+SELECT
+    YEAR(ORDER_DATE) AS SALES_YEAR,
+    MONTH(ORDER_DATE) AS SALES_MONTH,
+    SUM(SALES) AS TOTAL_SALES,
+    SUM(PROFIT) AS TOTAL_PROFIT
+FROM STG_RETAIL_SALES
+GROUP BY
+    YEAR(ORDER_DATE),
+    MONTH(ORDER_DATE)
+ORDER BY
+    SALES_YEAR,
+    SALES_MONTH;
+
+----Top Selling Product in Each Region----
+
+SELECT *
+FROM (
+    SELECT
+        REGION,
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        SUM(SALES) AS TOTAL_SALES,
+        ROW_NUMBER() OVER (
+            PARTITION BY REGION
+            ORDER BY SUM(SALES) DESC
+        ) AS RN
+    FROM STG_RETAIL_SALES
+    GROUP BY REGION, PRODUCT_ID, PRODUCT_NAME
+) X
+WHERE RN = 1;
+
+----Customer Profitability Ranking----
+
+SELECT
+    CUSTOMER_ID,
+    CUSTOMER_NAME,
+    SUM(PROFIT) AS TOTAL_PROFIT,
+    RANK() OVER (
+        ORDER BY SUM(PROFIT) DESC
+    ) AS PROFIT_RANK
+FROM STG_RETAIL_SALES
+GROUP BY CUSTOMER_ID, CUSTOMER_NAME;
