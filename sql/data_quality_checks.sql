@@ -48,3 +48,20 @@ WHERE PROFIT < 0;
 SELECT *
 FROM RETAIL_SALES
 WHERE ORDER_DATE > CURRENT_DATE();
+
+----------`Staging Layer Checks
+
+-- Region should not be null
+SELECT *
+FROM STG_RETAIL_SALES
+WHERE REGION IS NULL;
+
+-- Category should not be null
+SELECT *
+FROM STG_RETAIL_SALES
+WHERE CATEGORY IS NULL;
+
+-- Product Name should not be null
+SELECT *
+FROM STG_RETAIL_SALES
+WHERE PRODUCT_NAME IS NULL;
