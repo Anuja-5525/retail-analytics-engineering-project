@@ -150,5 +150,14 @@ Examples:
 * SQL Development
 * Snowflake Stored Procedures
 * Snowflake Tasks
+
+  ## Snowflake Features Used
+
+- Snowflake SQL Worksheets
+- Snowflake Stored Procedures
+- Snowflake Tasks
+- Virtual Warehouse Execution
+- Views and Reporting Layer
+- Data Quality Validation Framework
 * Reporting and KPI Development
 * Business Insight Generation
