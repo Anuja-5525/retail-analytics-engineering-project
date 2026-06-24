@@ -1,23 +1,19 @@
-# Project Architecture
-
-Retail Analytics Engineering Project
+Retail Analytics Engineering Project Architecture
 
 CSV File
-    ↓
-RETAIL_SALES
-    ↓
+   ↓
+RETAIL_SALES (Raw Layer)
+   ↓
+Data Quality Checks
+   ↓
+SP_VALIDATE_RETAIL_DATA()
+   ↓
 STG_RETAIL_SALES
-    ↓
+   ↓
 Business Views
-    ├── VW_REGION_PERFORMANCE
-    ├── VW_TOP_CUSTOMERS
-    ├── VW_CATEGORY_PERFORMANCE
-    ├── VW_PRODUCT_PERFORMANCE
-    ├── VW_PRODUCT_REGION_PERFORMANCE
-    └── VW_MONTHLY_SALES
-    ↓
-Analytical Queries
-    ├── Top 5 Products by Region
-    ├── Top 3 Customers by Profit
-    ├── Category Rankings
-    └── Monthly Sales Trend
+   ↓
+VW_EXECUTIVE_DASHBOARD
+   ↓
+Business Insights
+   ↓
+TASK_VALIDATE_RETAIL_DATA
